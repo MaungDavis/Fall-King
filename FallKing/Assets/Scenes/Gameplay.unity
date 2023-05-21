@@ -717,10 +717,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1291660958}
   - component: {fileID: 1291660962}
-  - component: {fileID: 1291660957}
   - component: {fileID: 1291660960}
-  - component: {fileID: 1291660959}
   - component: {fileID: 1291660961}
+  - component: {fileID: 1291660957}
+  - component: {fileID: 1291660959}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -788,7 +788,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1291660956}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.676, y: 1.358, z: -1}
+  m_LocalPosition: {x: -1.922, y: 1.522, z: -1}
   m_LocalScale: {x: 0.20832, y: 0.20832, z: 0.41664}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -855,7 +855,7 @@ Rigidbody2D:
   m_Mass: 1
   m_LinearDrag: 0
   m_AngularDrag: 0.05
-  m_GravityScale: 0.1
+  m_GravityScale: 1
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -879,7 +879,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83f1c1e7782e7c544976768ab371e4d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
+  glidingSpeed: 9.4
+  antiGravityForce: 0.98
+  gravityForce: 1
 --- !u!114 &1291660962
 MonoBehaviour:
   m_ObjectHideFlags: 0
