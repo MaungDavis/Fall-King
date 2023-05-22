@@ -55,25 +55,25 @@ public class PlayerController : MonoBehaviour
             }
         }
         else
-        {   //! Allow player to hold down to go down faster -> Will be a problem since the downspeed is clamped below
+        {   ////! Allow player to hold down to go down faster -> Will be a problem since the downspeed is clamped below
             var movementY = playerInputY;
             rigidBody.gravityScale = initialGravity;
             var move = new Vector2 (movementX, movementY);
             rigidBody.AddForce (move * glidingAcceleration);
-            Debug.Log($"The new velocity {move}");
+            //Debug.Log($"The new velocity {move}");
         }
 
         //Clamp the falling speed AND left/right movement IF falling AND the player not holding down to go down faster
         if (rigidBody.velocity.y < 0 && playerInputY > 0)
         {
             rigidBody.velocity = new Vector2(Mathf.Clamp(rigidBody.velocity.x, -maxMoveMagnitude, maxMoveMagnitude), Mathf.Clamp(rigidBody.velocity.y, -maxFallMagnitude, 0f));
-            Debug.Log("The velocity is clamped");
+            //Debug.Log("The velocity is clamped");
         }
         else
         {   //Only clamp the left/right
             rigidBody.velocity = Vector2.ClampMagnitude(rigidBody.velocity, maxMoveMagnitude);
         }
 
-        Debug.Log($"current velocity: {rigidBody.velocity.y} and horizontal: {rigidBody.velocity.x}");
+        //Debug.Log($"current velocity: {rigidBody.velocity.y} and horizontal: {rigidBody.velocity.x}");
     }
 }
