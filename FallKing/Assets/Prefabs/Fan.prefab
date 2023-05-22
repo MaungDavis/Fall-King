@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3324863187670931160}
   - component: {fileID: 6098936077176760877}
   m_Layer: 0
-  m_Name: pushBouyancy
+  m_Name: Fan
   m_TagString: Fan
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

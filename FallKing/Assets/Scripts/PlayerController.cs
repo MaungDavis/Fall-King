@@ -40,16 +40,19 @@ public class PlayerController : MonoBehaviour
     /// Player can only fall up to maximum speed
     /// </summary>
     void FixedUpdate()
-    {   //TODO: When hover key pressed, fan physics doesn't work due to manually changing velocity in controll
-            //TODO: Stop using Add force to control player hovering speed? Instead change the gravity? Clamp the velocity as needed
-        //? Currently if the player is shoot up by fan while holding hover, the lesser gravity will allow to shoot up even further
+    {   ////TODO: When hover key pressed, fan physics doesn't work due to manually changing velocity in controll
+            ////TODO: Stop using Add force to control player hovering speed? Instead change the gravity? Clamp the velocity as needed
+        ////? Currently if the player is shoot up by fan while holding hover, the lesser gravity will allow to shoot up even further
         float movementX = playerInputX;
-        if (playerInputY > 0)   //If the key up is pressed
+        if (playerInputY > 0)   //If the key up is pressed and the player is falling
         {
-            rigidBody.gravityScale = initialGravity - hoverForce;
-            var moveWithUp = new Vector2(movementX, 0);
-            rigidBody.AddForce(moveWithUp * glidingAcceleration);
-            //rigidBody.velocity = new Vector2(rigidBody.velocity.x, -hoverForce);  //! Force the player to have only one speed
+            if (rigidBody.velocity.y < 0)
+            {
+                rigidBody.gravityScale = initialGravity - hoverForce;
+                var moveWithUp = new Vector2(movementX, 0);
+                rigidBody.AddForce(moveWithUp * glidingAcceleration);
+                //rigidBody.velocity = new Vector2(rigidBody.velocity.x, -hoverForce);  //! Force the player to have only one speed
+            }
         }
         else
         {   //! Allow player to hold down to go down faster -> Will be a problem since the downspeed is clamped below
@@ -60,7 +63,8 @@ public class PlayerController : MonoBehaviour
             Debug.Log($"The new velocity {move}");
         }
 
-        if (rigidBody.velocity.y < 0)   //Clamp the falling speed AND left/right movement IF falling
+        //Clamp the falling speed AND left/right movement IF falling AND the player not holding down to go down faster
+        if (rigidBody.velocity.y < 0 && playerInputY > 0)
         {
             rigidBody.velocity = new Vector2(Mathf.Clamp(rigidBody.velocity.x, -maxMoveMagnitude, maxMoveMagnitude), Mathf.Clamp(rigidBody.velocity.y, -maxFallMagnitude, 0f));
             Debug.Log("The velocity is clamped");
