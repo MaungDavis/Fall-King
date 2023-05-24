@@ -33,7 +33,6 @@ public class PlayerController : MonoBehaviour
         playerInputY = movementVector.y;
     }
 
-
     // Update is called once per frame
     /// <summary>
     /// Up = only lower the gravity force

@@ -8,15 +8,23 @@ using UnityEngine;
 //
 public class MagnetController : MonoBehaviour
 {
-    private CircleCollider2D circleCollider;
+    [SerializeField] private float magneticZoneSize = 1;
+
     [SerializeField] private GameObject magneticZone;
 
-    // Start is called before the first frame update
-    void Start()
+    private CircleCollider2D circleCollider;
+    private Vector3 initialScale;
+    private void Start()
     {
-        circleCollider = GetComponent<CircleCollider2D>();
-        var scale = circleCollider.radius * 4;
-        magneticZone.transform.localScale = new Vector3(circleCollider.transform.localScale.x, circleCollider.transform.localScale.y, circleCollider.transform.localScale.z) * scale;
+        circleCollider = magneticZone.GetComponent<CircleCollider2D>();
+        initialScale = circleCollider.transform.localScale;
+    }
+
+    // Start is called before the first frame update
+    void Update()
+    {
+        circleCollider.transform.localScale = initialScale * magneticZoneSize;
+        //magneticZone.transform.localScale = new Vector3(circleCollider.transform.localScale.x, circleCollider.transform.localScale.y, circleCollider.transform.localScale.z) * scale;
         Debug.Log($"The child localScale after {magneticZone.transform.localScale}");
         Debug.Log($"The collider scale {circleCollider.transform.localScale}");
     }
