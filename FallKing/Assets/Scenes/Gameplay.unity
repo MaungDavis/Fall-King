@@ -154,7 +154,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   musicMixerGroup: {fileID: -10248200551355864, guid: 5668fbf22e7234da9a6748060ec8353e, type: 2}
   sfxMixerGroup: {fileID: -8090992118389914705, guid: 5668fbf22e7234da9a6748060ec8353e, type: 2}
-  musicTracks: []
+  musicTracks:
+  - clip: {fileID: 8300000, guid: 0eaaf99ce7e874b418cae8565fa52db4, type: 3}
+    audioSource: {fileID: 0}
+    title: MenuMusic
+    volume: 1
+    pitch: 0
+    loop: 1
   sfxClips: []
 --- !u!4 &64521251
 Transform:

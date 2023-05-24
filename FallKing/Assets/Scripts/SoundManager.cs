@@ -45,7 +45,7 @@ public class SoundManager : MonoBehaviour
         }
 
         //play initial track
-        this.PlayMusicTrack("Factory");
+        this.PlayMusicTrack("MenuMusic");
     }
 
     public void PlayMusicTrack(string title)
