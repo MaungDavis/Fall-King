@@ -33,6 +33,12 @@ public class PlayerController : MonoBehaviour
         playerInputY = movementVector.y;
     }
 
+    //TODO: Make a temporary player jump button to test out the NPC AI idea
+    void OnFire(InputValue fireValue)
+    {
+
+    }
+
     // Update is called once per frame
     /// <summary>
     /// Up = only lower the gravity force
