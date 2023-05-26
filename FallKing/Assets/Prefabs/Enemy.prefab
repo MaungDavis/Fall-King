@@ -172,8 +172,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  jumpForce: 300
-  scanInterval: 0
-  moveInterval: 2
-  timeToLocation: 2
-  horizontalMoveForce: 100
+  jumpForce: 5
+  scanInterval: 1
+  moveInterval: 3
+  timeToLocation: 1
+  oneHopDistance: 3
