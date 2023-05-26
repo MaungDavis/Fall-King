@@ -18,6 +18,9 @@ public class EnemyController : MonoBehaviour
     private float scanTimer = 0;
     private float moveTimer = 0;
     private float initialJumpForce;
+
+    private float force;
+
     private void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
@@ -49,6 +52,12 @@ public class EnemyController : MonoBehaviour
             Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
             Vector2 targetPos = new Vector2(player.transform.position.x, player.transform.position.y);
 
+            //////////
+            var velocity = (targetPos.x - currentPos.x) / timeToLocation;
+            force = (rigidBody.mass * velocity) / timeToLocation;
+            Debug.Log($"The force {force}");
+            //////////
+
             hit = Physics2D.Linecast(currentPos, targetPos);
             horizontalDistToTarget = (targetPos - currentPos).normalized.x;
             scanTimer = 0f;
@@ -65,9 +74,10 @@ public class EnemyController : MonoBehaviour
         {
             if (hit.collider && hit.collider.gameObject.CompareTag("Player"))
             {
-                Vector2 hopToTarget = new Vector2(horizontalDistToTarget * horizontalMoveForce, jumpForce);
-                rigidBody.AddForce(hopToTarget);
+                Vector2 hopToTarget = new Vector2(force, jumpForce);
+                rigidBody.AddForce(hopToTarget, ForceMode2D.Impulse);
 
+                Debug.Log($"The force vector {hopToTarget}");
                 //Debug.Log($"The thing that was hit {hit.rigidbody.name}");
                 //Debug.DrawLine(transform.position, hit.rigidbody.position);
             }

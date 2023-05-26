@@ -25,7 +25,7 @@ public class MagnetController : MonoBehaviour
     {
         circleCollider.transform.localScale = initialScale * magneticZoneSize;
         //magneticZone.transform.localScale = new Vector3(circleCollider.transform.localScale.x, circleCollider.transform.localScale.y, circleCollider.transform.localScale.z) * scale;
-        Debug.Log($"The child localScale after {magneticZone.transform.localScale}");
-        Debug.Log($"The collider scale {circleCollider.transform.localScale}");
+        //Debug.Log($"The child localScale after {magneticZone.transform.localScale}");
+        //Debug.Log($"The collider scale {circleCollider.transform.localScale}");
     }
 }
