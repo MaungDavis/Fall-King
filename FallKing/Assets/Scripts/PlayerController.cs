@@ -13,10 +13,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float hoverForce = 0.8f;
     [SerializeField] private float maxMoveMagnitude = 20f;
     [SerializeField] private float maxFallMagnitude = 20f;
+    [SerializeField] private bool useJump = false;
+    
     private Rigidbody2D rigidBody;
     private float initialGravity;
     private float playerInputX, playerInputY;
 
+    
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
@@ -33,11 +36,6 @@ public class PlayerController : MonoBehaviour
         playerInputY = movementVector.y;
     }
 
-    //TODO: Make a temporary player jump button to test out the NPC AI idea
-    void OnFire(InputValue fireValue)
-    {
-
-    }
 
     // Update is called once per frame
     /// <summary>
