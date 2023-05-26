@@ -13,7 +13,6 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float hoverForce = 0.8f;
     [SerializeField] private float maxMoveMagnitude = 20f;
     [SerializeField] private float maxFallMagnitude = 20f;
-    [SerializeField] private bool useJump = false;
     
     private Rigidbody2D rigidBody;
     private float initialGravity;
