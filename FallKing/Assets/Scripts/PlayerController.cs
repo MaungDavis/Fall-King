@@ -17,7 +17,6 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigidBody;
     private float initialGravity;
     private float playerInputX, playerInputY;
-
     
     void Start()
     {
@@ -35,6 +34,14 @@ public class PlayerController : MonoBehaviour
         playerInputY = movementVector.y;
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Collide with left or right boundary
+        if (collision.gameObject.tag == "Boundary")
+        {
+            playerInputX = 0;
+        }
+    }
 
     // Update is called once per frame
     /// <summary>
