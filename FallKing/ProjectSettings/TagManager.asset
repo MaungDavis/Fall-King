@@ -8,6 +8,7 @@ TagManager:
   - Fan
   - Enemy
   - Boundary
+  - LevelBoundary
   layers:
   - Default
   - TransparentFX
