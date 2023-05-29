@@ -1,6 +1,4 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -20,6 +18,8 @@ public class EnemyJumpAI : MonoBehaviour
     [SerializeField] private float timeToLocation;  //Time object should take to move to target location (exclude the interval)
     [SerializeField] private float oneHopDistance;   //The max distance user can travel in one hop
 
+    private Transform detectorLocation;
+    private EnemyDetection detector;
     private Rigidbody2D rigidBody;
     private RaycastHit2D hit;
     private float scanTimer = 0;
@@ -29,11 +29,14 @@ public class EnemyJumpAI : MonoBehaviour
 
     private void Start()
     {
-        rigidBody = GetComponent<Rigidbody2D>();
+        rigidBody = GetComponentInChildren<Rigidbody2D>();
+        Debug.Log($"the componnent name {rigidBody.name}");
+        //detector = GetComponentInChildren<EnemyDetection>();
         initialJumpForce = jumpForce;
         Assert.AreNotEqual(timeToLocation, 0f);
     }
 
+    //TODO: detect ground is not a good way yet, test it out more
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.collider.CompareTag("Ground"))
@@ -50,10 +53,9 @@ public class EnemyJumpAI : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (scanTimer > scanInterval)
+        if (scanTimer > scanInterval && detector.detectedPlayer)
         {
             Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
             Vector2 targetPos = new Vector2(player.transform.position.x, player.transform.position.y);
@@ -69,6 +71,7 @@ public class EnemyJumpAI : MonoBehaviour
             scanTimer = 0f;
 
         }
+        transform.position = rigidBody.position;    // Rigidbody movement is independent, thus have to update location manually
         scanTimer += Time.deltaTime;
     }
 

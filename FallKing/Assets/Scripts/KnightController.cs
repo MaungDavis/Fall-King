@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Knight.Command;
+using UnityEngine;
 
 public class KnightController : MonoBehaviour
 {

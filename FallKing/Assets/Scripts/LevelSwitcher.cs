@@ -1,7 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using Cinemachine;
+using UnityEngine;
 
 public class LevelSwitcher : MonoBehaviour
 {
@@ -12,7 +10,7 @@ public class LevelSwitcher : MonoBehaviour
 
     // Start is called before the first frame update
     void Start()
-    {   
+    {
         this.virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
     }
 
@@ -23,7 +21,7 @@ public class LevelSwitcher : MonoBehaviour
         {
             Vector2 playerPosition = other.gameObject.transform.position;
             Vector2 boundaryPosition = this.gameObject.transform.position;
-            
+
             // Move camera to next level
             if (playerPosition.y >= boundaryPosition.y)
             {

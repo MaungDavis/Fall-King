@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Knight.Command;
 
 namespace Knight.Command
 {

@@ -1,8 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
@@ -13,11 +8,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float hoverForce = 0.8f;
     [SerializeField] private float maxMoveMagnitude = 20f;
     [SerializeField] private float maxFallMagnitude = 20f;
-    
+
     private Rigidbody2D rigidBody;
     private float initialGravity;
     private float playerInputX, playerInputY;
-    
+
     void Start()
     {
         rigidBody = GetComponent<Rigidbody2D>();
@@ -50,7 +45,7 @@ public class PlayerController : MonoBehaviour
     /// </summary>
     void FixedUpdate()
     {   ////TODO: When hover key pressed, fan physics doesn't work due to manually changing velocity in controll
-            ////TODO: Stop using Add force to control player hovering speed? Instead change the gravity? Clamp the velocity as needed
+        ////TODO: Stop using Add force to control player hovering speed? Instead change the gravity? Clamp the velocity as needed
         ////? Currently if the player is shoot up by fan while holding hover, the lesser gravity will allow to shoot up even further
         float movementX = playerInputX;
         if (playerInputY > 0)   //If the key up is pressed and the player is falling
@@ -67,8 +62,8 @@ public class PlayerController : MonoBehaviour
         {   ////! Allow player to hold down to go down faster -> Will be a problem since the downspeed is clamped below
             var movementY = playerInputY;
             rigidBody.gravityScale = initialGravity;
-            var move = new Vector2 (movementX, movementY);
-            rigidBody.AddForce (move * glidingAcceleration);
+            var move = new Vector2(movementX, movementY);
+            rigidBody.AddForce(move * glidingAcceleration);
             //Debug.Log($"The new velocity {move}");
         }
 
