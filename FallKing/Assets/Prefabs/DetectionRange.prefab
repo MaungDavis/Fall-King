@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 5311097466816231720}
   - component: {fileID: 2577535134270054824}
   - component: {fileID: 8974589157618909742}
-  m_Layer: 0
+  - component: {fileID: 4888420381540450009}
+  m_Layer: 6
   m_Name: DetectionRange
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -81,3 +82,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectedPlayer: 0
+--- !u!50 &4888420381540450009
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5549102170768938245}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0

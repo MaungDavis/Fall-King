@@ -4,14 +4,7 @@ using UnityEngine;
 
 public class EnemyDetection : MonoBehaviour
 {
-    private CircleCollider2D detectionCollider;
-    public bool detectedPlayer;
-
-    // Start is called before the first frame update
-    //void Start()
-    //{
-    //    detectionCollider = GetComponent<CircleCollider2D>();
-    //}
+    public bool detectedPlayer = false;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {

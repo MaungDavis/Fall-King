@@ -3,6 +3,8 @@ using UnityEngine;
 using UnityEngine.Assertions;
 
 
+//? REMEMBER: Have the layer of this object to be ignore raycast or else the linecast would not work
+
 ////TODO: Add jump distance. Currently the user can just bounce straight to the target location without any stops
 //TODO: User can slide on the groudn after landing due to momentum. Think about leave it llike that or not.
 public class EnemyJumpAI : MonoBehaviour
@@ -17,6 +19,7 @@ public class EnemyJumpAI : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float timeToLocation;  //Time object should take to move to target location (exclude the interval)
     [SerializeField] private float oneHopDistance;   //The max distance user can travel in one hop
+    [SerializeField] LayerMask ignoreLayerLinecast;
 
     private Transform detectorLocation;
     private EnemyDetection detector;
@@ -29,9 +32,10 @@ public class EnemyJumpAI : MonoBehaviour
 
     private void Start()
     {
-        rigidBody = GetComponentInChildren<Rigidbody2D>();
+        rigidBody = GetComponent<Rigidbody2D>();
         Debug.Log($"the componnent name {rigidBody.name}");
-        //detector = GetComponentInChildren<EnemyDetection>();
+        detector = GetComponentInChildren<EnemyDetection>();
+        detectorLocation = transform.Find("DetectionRange").gameObject.transform;
         initialJumpForce = jumpForce;
         Assert.AreNotEqual(timeToLocation, 0f);
     }
@@ -41,6 +45,7 @@ public class EnemyJumpAI : MonoBehaviour
     {
         if (collision.collider.CompareTag("Ground"))
         {
+            Debug.Log("Enter the ground");
             jumpForce = initialJumpForce;
         }
     }
@@ -55,7 +60,7 @@ public class EnemyJumpAI : MonoBehaviour
 
     void Update()
     {
-        if (scanTimer > scanInterval && detector.detectedPlayer)
+        if (scanTimer > scanInterval)
         {
             Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
             Vector2 targetPos = new Vector2(player.transform.position.x, player.transform.position.y);
@@ -67,17 +72,19 @@ public class EnemyJumpAI : MonoBehaviour
             impulseForce = (rigidBody.mass * velocity) / timeToLocation;   // force = impulse * velocity / times
             Debug.Log($"The force {impulseForce}");
 
-            hit = Physics2D.Linecast(currentPos, targetPos);
+            hit = Physics2D.Linecast(currentPos, targetPos, ~ignoreLayerLinecast);
+            //Debug.Log($"Ignore these mask {LayerMask.GetMask("Enemy Detection Layer", "Enemy Layer")}");
+            Debug.Log($"The hit {hit.collider.gameObject.name}");
             scanTimer = 0f;
 
         }
-        transform.position = rigidBody.position;    // Rigidbody movement is independent, thus have to update location manually
+        //detectorLocation.position = rigidBody.position;    // Rigidbody movement is independent, thus have to update location manually
         scanTimer += Time.deltaTime;
     }
 
     ////TODO: Change the physisc, when the target is too close, the force will make the user jump over the target over and over/
     ////TODO: A better method would be letting the user indicate the time they want to reach target, and from there calculate the force need
-    private void FixedUpdate()
+    void FixedUpdate()
     {
         if (moveTimer > moveInterval)
         {
