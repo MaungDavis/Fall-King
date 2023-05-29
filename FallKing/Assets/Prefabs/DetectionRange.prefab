@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 5311097466816231720}
   - component: {fileID: 2577535134270054824}
-  - component: {fileID: 8974589157618909742}
   - component: {fileID: 4888420381540450009}
   m_Layer: 6
   m_Name: DetectionRange
@@ -32,7 +31,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!58 &2577535134270054824
 CircleCollider2D:
@@ -69,19 +68,6 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 2.36
---- !u!114 &8974589157618909742
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5549102170768938245}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e747c63be13ffde478f091f2cedecd19, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  detectedPlayer: 0
 --- !u!50 &4888420381540450009
 Rigidbody2D:
   serializedVersion: 4

@@ -22,7 +22,11 @@ public class EnemyJumpAI : MonoBehaviour
     [SerializeField] LayerMask ignoreLayerLinecast;
 
     private Transform detectorLocation;
-    private EnemyDetection detector;
+
+    private Collider2D targetCollider;
+    private Collider2D colliderChildDetector;
+    private bool detectedPlayer = false;
+
     private Rigidbody2D rigidBody;
     private RaycastHit2D hit;
     private float scanTimer = 0;
@@ -34,8 +38,10 @@ public class EnemyJumpAI : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         Debug.Log($"the componnent name {rigidBody.name}");
-        detector = GetComponentInChildren<EnemyDetection>();
-        detectorLocation = transform.Find("DetectionRange").gameObject.transform;
+        //colliderChildDetector = GetComponentInChildren<CircleCollider2D>();
+        //Debug.Log($"The child collider name {colliderChildDetector.name}");
+        targetCollider = player.GetComponent<Collider2D>();
+        //detectorLocation = transform.Find("DetectionRange").gameObject.transform;
         initialJumpForce = jumpForce;
         Assert.AreNotEqual(timeToLocation, 0f);
     }
@@ -60,7 +66,18 @@ public class EnemyJumpAI : MonoBehaviour
 
     void Update()
     {
-        if (scanTimer > scanInterval)
+        //if (colliderChildDetector.IsTouching(targetCollider))
+        //{
+        //    Debug.Log("Detect the player");
+        //    detectedPlayer = true;
+        //}
+        //else
+        //{
+        //    Debug.Log("Exit the player");
+        //    detectedPlayer = false;
+        //}
+
+        if (scanTimer > scanInterval && detectedPlayer)
         {
             Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
             Vector2 targetPos = new Vector2(player.transform.position.x, player.transform.position.y);

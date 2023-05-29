@@ -34,7 +34,7 @@ Transform:
   m_Children:
   - {fileID: 8369857840367955062}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &8434376428951284071
 SpriteRenderer:
@@ -178,6 +178,9 @@ MonoBehaviour:
   jumpForce: 0
   timeToLocation: 0
   oneHopDistance: 0
+  ignoreLayerLinecast:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!1001 &4437024601878861150
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -238,7 +241,8 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8974589157618909742, guid: 56b34c95d1d2d334ba33a941be38b169, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
