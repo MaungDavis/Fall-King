@@ -29,12 +29,12 @@ public class EnemyDetection : MonoBehaviour
     //    }
     //}
 
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        Debug.Log("EXITING Collision");
-        if (collision.collider && collision.collider.CompareTag("Player"))
-        {
-            detectedPlayer = false;
-        }
-    }
+    //private void OnCollisionExit2D(Collision2D collision)
+    //{
+    //    Debug.Log("EXITING Collision");
+    //    if (collision.collider && collision.collider.CompareTag("Player"))
+    //    {
+    //        detectedPlayer = false;
+    //    }
+    //}
 }
