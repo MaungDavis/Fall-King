@@ -4,37 +4,25 @@ using UnityEngine;
 
 public class EnemyDetection : MonoBehaviour
 {
+    [SerializeField] private Transform physicalBodyPos;
+
     [HideInInspector]
     public bool detectedPlayer = false;
 
+    private void Update()
+    {
+        transform.position = physicalBodyPos.position;
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Trigger here");
+        detectedPlayer = true;
+        Debug.Log("TRIGGER");
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("ENTERING detection");
+        detectedPlayer = false;
+        Debug.Log("EXITTTT");
     }
-
-
-    //private void OnTriggerEnter2D(Collider2D collision)
-    //{
-    //    Debug.Log("ENTERING collision");
-    //    if (collision.)
-    //    if (collision.collider && collision.collider.CompareTag("Player"))
-    //    {
-    //        Debug.Log("WTF this thing doesn't hit");
-    //        detectedPlayer = true;
-    //    }
-    //}
-
-    //private void OnCollisionExit2D(Collision2D collision)
-    //{
-    //    Debug.Log("EXITING Collision");
-    //    if (collision.collider && collision.collider.CompareTag("Player"))
-    //    {
-    //        detectedPlayer = false;
-    //    }
-    //}
 }

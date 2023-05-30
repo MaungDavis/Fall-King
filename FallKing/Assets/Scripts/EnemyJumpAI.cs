@@ -9,6 +9,7 @@ using UnityEngine.Assertions;
 //TODO: User can slide on the groudn after landing due to momentum. Think about leave it llike that or not.
 public class EnemyJumpAI : MonoBehaviour
 {
+    [Header("Logic")]
     [SerializeField] private GameObject player;
 
     [Header("Pathfinding")]
@@ -21,7 +22,6 @@ public class EnemyJumpAI : MonoBehaviour
     [SerializeField] private float oneHopDistance;   //The max distance user can travel in one hop
     [SerializeField] LayerMask ignoreLayerLinecast;
 
-    private Transform detectorLocation;
 
     private Collider2D targetCollider;
     private Collider2D colliderChildDetector;
@@ -38,10 +38,9 @@ public class EnemyJumpAI : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         Debug.Log($"the componnent name {rigidBody.name}");
-        //colliderChildDetector = GetComponentInChildren<CircleCollider2D>();
-        //Debug.Log($"The child collider name {colliderChildDetector.name}");
+
         targetCollider = player.GetComponent<Collider2D>();
-        //detectorLocation = transform.Find("DetectionRange").gameObject.transform;
+
         initialJumpForce = jumpForce;
         Assert.AreNotEqual(timeToLocation, 0f);
     }
@@ -66,18 +65,22 @@ public class EnemyJumpAI : MonoBehaviour
 
     void Update()
     {
-        //if (colliderChildDetector.IsTouching(targetCollider))
-        //{
-        //    Debug.Log("Detect the player");
-        //    detectedPlayer = true;
-        //}
-        //else
-        //{
-        //    Debug.Log("Exit the player");
-        //    detectedPlayer = false;
-        //}
 
-        if (scanTimer > scanInterval && detectedPlayer)
+    }
+
+    ////TODO: Change the physisc, when the target is too close, the force will make the user jump over the target over and over/
+    ////TODO: A better method would be letting the user indicate the time they want to reach target, and from there calculate the force need
+    void FixedUpdate()
+    {
+        if (transform.parent.Find("DetectionRange") == null)
+        {
+            return;
+        }
+        bool detection = transform.parent.Find("DetectionRange").GetComponent<EnemyDetection>().detectedPlayer;
+
+
+        scanTimer += Time.deltaTime;
+        if (scanTimer > scanInterval && detection)
         {
             Vector2 currentPos = new Vector2(transform.position.x, transform.position.y);
             Vector2 targetPos = new Vector2(player.transform.position.x, player.transform.position.y);
@@ -87,35 +90,26 @@ public class EnemyJumpAI : MonoBehaviour
 
             var velocity = distToTarget / timeToLocation;
             impulseForce = (rigidBody.mass * velocity) / timeToLocation;   // force = impulse * velocity / times
-            Debug.Log($"The force {impulseForce}");
+            Debug.Log($"The impulse force {impulseForce}");
 
             hit = Physics2D.Linecast(currentPos, targetPos, ~ignoreLayerLinecast);
             //Debug.Log($"Ignore these mask {LayerMask.GetMask("Enemy Detection Layer", "Enemy Layer")}");
             Debug.Log($"The hit {hit.collider.gameObject.name}");
             scanTimer = 0f;
-
         }
-        //detectorLocation.position = rigidBody.position;    // Rigidbody movement is independent, thus have to update location manually
-        scanTimer += Time.deltaTime;
-    }
-
-    ////TODO: Change the physisc, when the target is too close, the force will make the user jump over the target over and over/
-    ////TODO: A better method would be letting the user indicate the time they want to reach target, and from there calculate the force need
-    void FixedUpdate()
-    {
-        if (moveTimer > moveInterval)
+         else
         {
-            if (hit.collider && hit.collider.gameObject.CompareTag("Player"))
-            {
-                Vector2 hopToTarget = new Vector2(impulseForce, jumpForce);
-                rigidBody.AddForce(hopToTarget, ForceMode2D.Impulse);   //? FIXME: Change to impulse made the user still jumping despite the jumpForce is 0
-
-                Debug.Log($"The force vector {hopToTarget}");
-                Debug.Log($"The thing that was hit {hit.rigidbody.name}");
-                Debug.DrawLine(transform.position, hit.rigidbody.position);
-            }
-            moveTimer = 0f;
+            return;
         }
-        moveTimer += Time.deltaTime;
+
+        if (hit.collider && hit.collider.gameObject.CompareTag("Player"))
+        {
+            Vector2 hopToTarget = new Vector2(impulseForce, jumpForce);
+            rigidBody.AddForce(hopToTarget, ForceMode2D.Impulse);   //? FIXME: Change to impulse made the user still jumping despite the jumpForce is 0
+
+            Debug.Log($"The force vector {hopToTarget}");
+            Debug.Log($"The thing that was hit {hit.rigidbody.name}");
+            Debug.DrawLine(transform.position, hit.rigidbody.position);
+        }
     }
 }
