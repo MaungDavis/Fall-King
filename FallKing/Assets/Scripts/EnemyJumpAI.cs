@@ -11,6 +11,7 @@ public class EnemyJumpAI : MonoBehaviour
 {
     [Header("Logic")]
     [SerializeField] private GameObject player;
+    [SerializeField] private EnemyDetection detectorScript;
 
     [Header("Pathfinding")]
     [SerializeField] private float scanInterval;    //Time between scanning for target
@@ -22,15 +23,9 @@ public class EnemyJumpAI : MonoBehaviour
     [SerializeField] private float oneHopDistance;   //The max distance user can travel in one hop
     [SerializeField] LayerMask ignoreLayerLinecast;
 
-
-    private Collider2D targetCollider;
-    private Collider2D colliderChildDetector;
-    private bool detectedPlayer = false;
-
     private Rigidbody2D rigidBody;
     private RaycastHit2D hit;
     private float scanTimer = 0;
-    private float moveTimer = 0;
     private float initialJumpForce;
     private float impulseForce; // Force used for the user hopping - use Force.Impulse
 
@@ -38,9 +33,6 @@ public class EnemyJumpAI : MonoBehaviour
     {
         rigidBody = GetComponent<Rigidbody2D>();
         Debug.Log($"the componnent name {rigidBody.name}");
-
-        targetCollider = player.GetComponent<Collider2D>();
-
         initialJumpForce = jumpForce;
         Assert.AreNotEqual(timeToLocation, 0f);
     }
@@ -63,21 +55,15 @@ public class EnemyJumpAI : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-
-    }
-
     ////TODO: Change the physisc, when the target is too close, the force will make the user jump over the target over and over/
     ////TODO: A better method would be letting the user indicate the time they want to reach target, and from there calculate the force need
     void FixedUpdate()
     {
-        if (transform.parent.Find("DetectionRange") == null)
+        if (detectorScript == null)
         {
             return;
         }
-        bool detection = transform.parent.Find("DetectionRange").GetComponent<EnemyDetection>().detectedPlayer;
-
+        bool detection = detectorScript.detectedPlayer;
 
         scanTimer += Time.deltaTime;
         if (scanTimer > scanInterval && detection)
