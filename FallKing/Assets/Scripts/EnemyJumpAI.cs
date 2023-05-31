@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-
+//TODO: add a timer between each jump so that it doesn't appear to be too aggressive
 //? REMEMBER: Have the layer of this object to be ignore raycast or else the linecast would not work
 
 ////TODO: Add jump distance. Currently the user can just bounce straight to the target location without any stops
