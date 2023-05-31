@@ -155,6 +155,10 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2356099332752697445, guid: 5aea429db77adc748825927891adb9c8, type: 3}
+      propertyPath: detectorScript
+      value: 
+      objectReference: {fileID: 2664750950800870953}
+    - target: {fileID: 2356099332752697445, guid: 5aea429db77adc748825927891adb9c8, type: 3}
       propertyPath: oneHopDistance
       value: 3
       objectReference: {fileID: 0}
