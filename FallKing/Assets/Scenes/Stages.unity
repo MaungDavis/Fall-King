@@ -36534,9 +36534,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   glidingAcceleration: 15
-  hoverForce: 0.19
   maxMoveMagnitude: 20
-  maxFallMagnitude: 20
+  timeToStop: 5
+  hoverForce: 0.19
+  maxFallMagnitude: 2
 --- !u!50 &1794763725
 Rigidbody2D:
   serializedVersion: 4
