@@ -9,18 +9,20 @@ public class PlayerController : MonoBehaviour
 {
     [Header("Horizontal Physics")]
     [SerializeField] private float glidingAcceleration = 15f;
+    [Tooltip("The player max left and right velocity")]
     [SerializeField] private float maxMoveMagnitude = 20f;
-    [Tooltip("Time from when release key for player to complete stop")]
+    [Tooltip("Time from when release key until the player come to complete stop")]
     [SerializeField] private float timeToStop = 1f;
 
     [Header("Vertical Physics")]
+    [Tooltip("The player up force, need to be lower than gravity scale to make the player still falling")]
     [SerializeField] private float hoverForce = 0.8f;
     [SerializeField] private float maxFallMagnitude = 20f;
 
     private Rigidbody2D rigidBody;
     private float initialGravity;
     private float playerInputX, playerInputY;
-    bool playerRelasedKey = true;
+    bool playerReleasedKey = true;
 
     void Start()
     {
@@ -36,6 +38,10 @@ public class PlayerController : MonoBehaviour
         Vector2 movementVector = movementValue.Get<Vector2>();
         playerInputX = movementVector.x;
         playerInputY = movementVector.y;
+        if (playerInputX == 0)
+        {
+            playerReleasedKey = true;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -53,12 +59,16 @@ public class PlayerController : MonoBehaviour
         ////? Currently if the player is shoot up by fan while holding hover, the lesser gravity will allow to shoot up even further
 
         // Player release moving key, add a force to the opposite moving direction
-        if (playerInputX == 0)  //TODO: To use impulse, make sure to only execute this block once per player key released. Or else it will apply over and over the whole time the key is not pressed
+        if (playerReleasedKey)  ////TODO: To use impulse, make sure to only execute this block once per player key released. Or else it will apply over and over the whole time the key is not pressed
         {
-            //! Reverse impulse? Wrong physics tho
-            var reverseImpulse = (rigidBody.mass * rigidBody.velocity.magnitude) / timeToStop;
-            Debug.Log($"The impulse stop force {reverseImpulse}");
-            rigidBody.AddForce(new Vector2(reverseImpulse * (-rigidBody.velocity.normalized.x), 0) * glidingAcceleration, ForceMode2D.Impulse);
+            //! Reverse impulse
+            var reverseImpulse = -(rigidBody.mass * rigidBody.velocity.x) / timeToStop;     // negative to represent opposite force
+            //Debug.Log($"The impulse stop force {reverseImpulse}");
+            //Debug.LogError("Only print once");
+            //Debug.Log($"The current normalized velocity {rigidBody.velocity.normalized.x}");
+            rigidBody.AddForce(new Vector2(reverseImpulse * Mathf.Abs(rigidBody.velocity.normalized.x), 0), ForceMode2D.Impulse);
+            //Debug.Log($"The force being add {new Vector2(reverseImpulse * Mathf.Abs(rigidBody.velocity.normalized.x), 0)}");
+            playerReleasedKey = false;
         }
 
         if (playerInputY > 0)   //If the key up is pressed and the player is falling
