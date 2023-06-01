@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [Header("Vertical Physics")]
     [Tooltip("The player up force, need to be lower than gravity scale to make the player still falling")]
     [SerializeField] private float hoverForce = 0.8f;
+    [Tooltip("The max falling speed the player can have through gravity (doesn't account for holding down key)")]
     [SerializeField] private float maxFallMagnitude = 20f;
 
     private Rigidbody2D rigidBody;
