@@ -6,7 +6,7 @@ using UnityEngine.Assertions;
 //? REMEMBER: Have the layer of this object to be ignore raycast or else the linecast would not work
 
 ////TODO: Add jump distance. Currently the user can just bounce straight to the target location without any stops
-//TODO: User can slide on the groudn after landing due to momentum. Think about leave it llike that or not.
+////TODO: User can slide on the groudn after landing due to momentum. Think about leave it llike that or not.
 public class EnemyJumpAI : MonoBehaviour
 {
     [Header("Logic")]
