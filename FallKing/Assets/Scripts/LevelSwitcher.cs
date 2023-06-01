@@ -5,12 +5,18 @@ public class LevelSwitcher : MonoBehaviour
 {
     [SerializeField] private GameObject previousLevel;
     [SerializeField] private GameObject nextLevel;
+    [SerializeField] private Transform newRespawnLevel;
 
+    private Transform newRespawnPoint;
     private CinemachineVirtualCamera virtualCamera;
 
     // Start is called before the first frame update
     void Start()
-    {
+    {   
+        if (this.newRespawnLevel != null)
+        {
+            this.newRespawnPoint = newRespawnLevel.Find("StageRespawnPoint");
+        }
         this.virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
     }
 
@@ -19,18 +25,11 @@ public class LevelSwitcher : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
-            Vector2 playerPosition = other.gameObject.transform.position;
-            Vector2 boundaryPosition = this.gameObject.transform.position;
-
-            // Move camera to next level
-            if (playerPosition.y >= boundaryPosition.y)
+            virtualCamera.Follow = nextLevel.transform;
+            
+            if (this.newRespawnPoint != null)
             {
-                virtualCamera.Follow = nextLevel.transform;
-            }
-            // Move camera to previous level
-            else
-            {
-                virtualCamera.Follow = previousLevel.transform;
+                other.gameObject.GetComponent<PlayerController>().setRespawnPoint(this.newRespawnPoint);
             }
         }
     }

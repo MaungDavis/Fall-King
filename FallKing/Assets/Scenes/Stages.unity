@@ -247,6 +247,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previousLevel: {fileID: 1478975613}
   nextLevel: {fileID: 1485571601}
+  newRespawnLevel: {fileID: 0}
 --- !u!61 &64903781
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -352,7 +353,7 @@ GameObject:
   - component: {fileID: 179537951}
   m_Layer: 0
   m_Name: Level 1-1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -369,6 +370,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1888648625}
   - {fileID: 1883606947}
   m_Father: {fileID: 844392163}
   m_RootOrder: -1
@@ -6239,6 +6241,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previousLevel: {fileID: 1485571601}
   nextLevel: {fileID: 1115805501}
+  newRespawnLevel: {fileID: 0}
 --- !u!61 &223291465
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6331,6 +6334,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previousLevel: {fileID: 1245204215}
   nextLevel: {fileID: 633057426}
+  newRespawnLevel: {fileID: 0}
 --- !u!61 &292281869
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6517,7 +6521,7 @@ GameObject:
   - component: {fileID: 633057428}
   m_Layer: 0
   m_Name: Level 1-3
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12619,7 +12623,7 @@ GameObject:
   - component: {fileID: 1115805503}
   m_Layer: 0
   m_Name: Level 2-3
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18505,6 +18509,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previousLevel: {fileID: 633057426}
   nextLevel: {fileID: 1478975613}
+  newRespawnLevel: {fileID: 0}
 --- !u!61 &1230602973
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -18564,7 +18569,7 @@ GameObject:
   - component: {fileID: 1245204217}
   m_Layer: 0
   m_Name: Level 1-2
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24451,7 +24456,7 @@ GameObject:
   - component: {fileID: 1478975615}
   m_Layer: 0
   m_Name: Level 2-1
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24469,6 +24474,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 64903779}
+  - {fileID: 2147319400}
   m_Father: {fileID: 809939570}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -30305,7 +30311,7 @@ GameObject:
   - component: {fileID: 1485571603}
   m_Layer: 0
   m_Name: Level 2-2
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36537,6 +36543,7 @@ MonoBehaviour:
   hoverForce: 0.19
   maxMoveMagnitude: 20
   maxFallMagnitude: 20
+  respawnLevel: {fileID: 179537950}
 --- !u!50 &1794763725
 Rigidbody2D:
   serializedVersion: 4
@@ -36602,7 +36609,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1794763721}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.81, y: 14.56, z: -2}
+  m_LocalPosition: {x: -0.33, y: 14.56, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -36870,6 +36877,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   previousLevel: {fileID: 179537949}
   nextLevel: {fileID: 1245204215}
+  newRespawnLevel: {fileID: 0}
 --- !u!61 &1883606949
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -36915,6 +36923,37 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 55, y: 0.1}
   m_EdgeRadius: 0
+--- !u!1 &1888648624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1888648625}
+  m_Layer: 0
+  m_Name: StageRespawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1888648625
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1888648624}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -3.26, y: 13.8, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 179537950}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2056828089
 GameObject:
   m_ObjectHideFlags: 0
@@ -37063,4 +37102,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2147319399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2147319400}
+  m_Layer: 0
+  m_Name: StageRespawnPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2147319400
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147319399}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -5.7, y: 14.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1478975614}
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

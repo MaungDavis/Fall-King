@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
+using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -8,18 +9,23 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float hoverForce = 0.8f;
     [SerializeField] private float maxMoveMagnitude = 20f;
     [SerializeField] private float maxFallMagnitude = 20f;
-
+    [SerializeField] private Transform respawnLevel;
+    
+    private Transform respawnPoint;
+    private CinemachineVirtualCamera virtualCamera;
     private Rigidbody2D rigidBody;
     private float initialGravity;
     private float playerInputX, playerInputY;
 
     void Start()
     {
+        respawnPoint = respawnLevel.Find("StageRespawnPoint");
         rigidBody = GetComponent<Rigidbody2D>();
         initialGravity = rigidBody.gravityScale;
         //Debug.LogError($"The gravity force {initialGravity} and the hoverForce {hoverForce}");
         Assert.IsTrue(hoverForce > 0);  //Cannot have negative hover force for later calculation nor too big either
         Assert.IsTrue(hoverForce < initialGravity);
+        this.virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
     }
 
     void OnMove(InputValue movementValue)
@@ -29,12 +35,24 @@ public class PlayerController : MonoBehaviour
         playerInputY = movementVector.y;
     }
 
+    public void setRespawnPoint(Transform newRespawn)
+    {
+        this.respawnPoint = newRespawn;
+    }
+
     private void OnCollisionEnter2D(Collision2D collision)
     {
         // Collide with left or right boundary
         if (collision.gameObject.tag == "Boundary")
         {
             playerInputX = 0;
+        }
+
+        // Collide with any tile collision box
+        if (collision.gameObject.tag == "Ground")
+        {
+            virtualCamera.Follow = this.respawnLevel;
+            this.transform.position = new Vector2(this.respawnPoint.position.x, this.respawnPoint.position.y);
         }
     }
 
