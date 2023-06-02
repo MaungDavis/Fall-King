@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
         // Collide with any tile collision box
         if (collision.gameObject.tag == "Ground")
         {
-            virtualCamera.Follow = this.respawnLevel;
+            //virtualCamera.Follow = this.respawnLevel;
             this.transform.position = new Vector2(this.respawnPoint.position.x, this.respawnPoint.position.y);
         }
     }
