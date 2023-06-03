@@ -16,10 +16,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float timeToStop = 1f;
 
     [Header("Vertical Physics")]
-    [Tooltip("The player up force, need to be lower than gravity scale to make the player still falling")]
-    [SerializeField] private float hoverForce = 0.8f;
+    [Tooltip("The player falling speed when user holding up key")]
+    [SerializeField] private float hoverFallMagnitude = 15f;
     [Tooltip("The max falling speed the player can have through gravity (doesn't account for holding down key)")]
-    [SerializeField] private float maxFallMagnitude = 20f;
+    [SerializeField] private float maxFallMagnitude = 20f;  //TODO: Currently only works when holding up, doesn't clamped the player speed when falling freely
     [SerializeField] private Transform respawnLevel;
     
     private Transform respawnPoint;
@@ -28,15 +28,16 @@ public class PlayerController : MonoBehaviour
     private float initialGravity;
     private float playerInputX, playerInputY;
     bool playerReleasedKey = true;
+    float downSpeed;
 
     void Start()
     {
         respawnPoint = respawnLevel.Find("StageRespawnPoint");
         rigidBody = GetComponent<Rigidbody2D>();
         initialGravity = rigidBody.gravityScale;
+        downSpeed = maxFallMagnitude;
         //Debug.LogError($"The gravity force {initialGravity} and the hoverForce {hoverForce}");
-        Assert.IsTrue(hoverForce > 0);  //Cannot have negative hover force for later calculation nor too big either
-        Assert.IsTrue(hoverForce < initialGravity);
+        Assert.IsTrue(hoverFallMagnitude > 0);  //Cannot have negative hover force for later calculation nor too big either
         this.virtualCamera = FindObjectOfType<CinemachineVirtualCamera>();
     }
 
@@ -78,7 +79,7 @@ public class PlayerController : MonoBehaviour
         ////? Currently if the player is shoot up by fan while holding hover, the lesser gravity will allow to shoot up even further
 
         // Player release moving key, add a force to the opposite moving direction
-        if (playerReleasedKey)  ////TODO: To use impulse, make sure to only execute this block once per player key released. Or else it will apply over and over the whole time the key is not pressed
+        if (playerReleasedKey)
         {
             //! Reverse impulse
             var reverseImpulse = -(rigidBody.mass * rigidBody.velocity.x) / timeToStop;     // negative to represent opposite force
@@ -94,7 +95,7 @@ public class PlayerController : MonoBehaviour
         {
             if (rigidBody.velocity.y < 0)
             {
-                rigidBody.gravityScale = initialGravity - hoverForce;
+                downSpeed = hoverFallMagnitude;
                 //var moveWithUp = new Vector2(movementX, 0); //? Seperate add force horizontal and vertical later
                 //rigidBody.AddForce(moveWithUp * glidingAcceleration);
                 //rigidBody.velocity = new Vector2(rigidBody.velocity.x, -hoverForce);  //! Force the player to have only one speed
@@ -106,7 +107,7 @@ public class PlayerController : MonoBehaviour
             rigidBody.gravityScale = initialGravity;
             var moveUp = new Vector2(0, movementY);
             rigidBody.AddForce(moveUp);
-            //Debug.Log($"The new velocity {move}");
+            Debug.Log($"The velocity without press up {moveUp}");
         }
 
         //! Now add horizontal force
@@ -114,16 +115,17 @@ public class PlayerController : MonoBehaviour
         rigidBody.AddForce(new Vector2(movementX, 0) * glidingAcceleration);
 
         //Clamp the falling speed AND left/right movement IF falling AND the player not holding down to go down faster
-        if (rigidBody.velocity.y < 0 && playerInputY > 0)
+        if (rigidBody.velocity.y < 0 && playerInputY >= 0)
         {
-            rigidBody.velocity = new Vector2(Mathf.Clamp(rigidBody.velocity.x, -maxMoveMagnitude, maxMoveMagnitude), Mathf.Clamp(rigidBody.velocity.y, -maxFallMagnitude, 0f));
-            //Debug.Log("The velocity is clamped");
+            rigidBody.velocity = new Vector2(Mathf.Clamp(rigidBody.velocity.x, -maxMoveMagnitude, maxMoveMagnitude), Mathf.Clamp(rigidBody.velocity.y, -downSpeed, 0f));
+            Debug.Log("The velocity is clamped");
         }
         else
         {   //Only clamp the left/right
+            //! This else clause also accepts the case when the player NOT FALLIng, but its holding down
             rigidBody.velocity = Vector2.ClampMagnitude(rigidBody.velocity, maxMoveMagnitude);
         }
 
-        //Debug.Log($"current velocity: {rigidBody.velocity.y} and horizontal: {rigidBody.velocity.x}");
+        Debug.Log($"current velocity vertical: {rigidBody.velocity.y} and horizontal: {rigidBody.velocity.x}");
     }
 }
