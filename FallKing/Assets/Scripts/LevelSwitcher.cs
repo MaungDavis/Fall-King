@@ -29,7 +29,7 @@ public class LevelSwitcher : MonoBehaviour
             
             if (this.newRespawnPoint != null)
             {
-                other.gameObject.GetComponent<PlayerController>().setRespawnPoint(this.newRespawnPoint);
+                other.gameObject.GetComponent<Respawn>().setRespawnPoint(this.newRespawnPoint);
             }
         }
     }

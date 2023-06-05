@@ -52,10 +52,10 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void setRespawnPoint(Transform newRespawn)
+    /*public void setRespawnPoint(Transform newRespawn)
     {
         this.respawnPoint = newRespawn;
-    }
+    }*/
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
